@@ -1,0 +1,174 @@
+Enhancing the HL - SOT Approach to Sentiment Analysis via a Localized Feature Selection Framework In this paper , we propose a Localized Feature Selection ( LFS ) framework tailored to the HL - SOT approach to sentiment analysis .
+Within the proposed LFS framework , each node classifier of the HL - SOT approach is able to perform classification on target texts in a locally customized index term space .
+Extensive empirical analysis against a human - labeled data set demonstrates that with the proposed LFS framework the classification performance of the HL - SOT approach is enhanced with computational efficiency being greatly gained .
+To find the best feature selection algorithm that caters to the proposed LFS framework , five classic feature selection algorithms are comparatively studied , which indicates that the TS , DF , and MI algorithms achieve generally better performances than the CHI and IG algorithms .
+Among the five studied algorithms , the TS algorithm is best to be employed by the proposed LFS framework .
+1 Introduction With tens and thousands of review texts being generated online , it becomes increasingly challenging for an individual to exhaustively collect and study the online reviews .
+Therefore , research on automatic sentiment analysis on review texts has emerged as a popular topic at the crossroads of information retrieval and computational linguistics .
+Sentiment analysis on product reviews aims at extracting sentiment information from texts .
+It includes two tasks , i . e ., labeling a target text with !
+Each product review to be analyzed is called target text 1 ) the product ' s attributes it mentions ( attributes identification task ), and 2 ) the corresponding sentiments mentioned therein ( sentiment annotation task ).
+Recently , Wei and Gulla proposed the HL - SOT approach ( Wei and Gulla , 2010 ), i . e ., Hierarchical Learning ( HL ) with Sentiment Ontology Tree ( SOT ), that is able to achieve the two tasks in one hierarchical classification process .
+In the HL - SOT approach , each target text is encoded by a vector in a globally unified d - dimensional index term space and is respectively labeled by different nodes of SOT in a hierarchical manner .
+Although the HL - SOT approach is reported with promising classification performance on tasks of sentiment analysis , its computational efficiency , especially as d increases , becomes very low .
+Furthermore , as d increases it will have more chance to index noisy term into the globally unified index term space so that the classification performance of the HL - SOT approach might be depressed .
+Hence , we argue that if a locally customized index term space could be constructed for each node respectively , both the computational efficiency and the classification performance of the HL - SOT approach would be improved .
+In this paper , we propose a Localized Feature Selection ( LFS ) framework tailored to the HL - SOT approach .
+The rationale of the proposed LFS framework draws on the following two observations .
+Firstly , a feature term that is relevant to a node is usually irrelevant to nodes which stay at another branch of SOT .
+For example , " ergonomics " might be a feature term for the node " design and usability " ( see Fig .
+1 ) but it is irrelevant to the node " image quality ".
+Secondly , a feature ter - in the following of this paper .
+If specified otherwise in the following of this paper the term " node " refers to the classifier of the node .
+Figure 1 : an example of part of a SOT for digital camera m might become insignificant for child nodes of i even if the feature term is significant to i .
+For example , for a sentence commenting on a digital camera like " 40D handles noise very well ", terms such as " noise " and " well " are significant feature terms for the node " noise ".
+However , the term " noise " becomes insignificant for its child nodes " noise +" and " noise -", since the hierarchical classification characteristic of the HL - SOT approach that a node only processes target texts which are labeled as true by its parent node ensures that each target text handled by the nodes " noise +" and " noise -" is already classified as related to " noise ".
+In the proposed LFS framework , the concept of " local hierarchy " is defined and introduced as delimitation of local scope of nodes .
+The localized feature selection process is conducted for each node within its local scope to generate the customized index term space for the node .
+The proposed LFS framework is empirically analyzed on a human - labeled data set .
+The experimental results show that with the proposed LFS framework the classification performance of the HL - SOT approach is enhanced and the computational efficiency is significantly improved .
+To test which is the best to be employed by the proposed LFS framework , we further comparatively study five classic feature selection algorithms respectively based on document frequency ( DF ) ( Manning et al ., 2008 ), mutual information ( MI ) ( Manning et al ., 2008 ; Church and Hanks , 1990 ), x - statistic ( CHI ) ( Manning et al ., 2008 ), information gain ( IG ) ( Mitchell , 1997 ), and term strength ( TS ) ( Wilbur and Sirotkin , 1992 ).
+The comparatively experimental results suggest that the TS , DF , and MI algorithms achieve generally better performance than the CHI and IG algorithms .
+Among the five employed algorithms , the TS algorithm is the best to be employed by the proposed LFS framework .
+This paper makes the following contributions : • We propose a LFS framework to enhance the classification performance and improve the computational efficiency of the HL - SOT approach ; • We conduct a comparative study on five feature selection algorithms that can be employed in the proposed LFS .
+The remainder of the paper is organized as follows .
+In section 2 , we discuss an overview of related work on sentiment analysis .
+In section 3 , we review the HL - SOT approach proposed in ( Wei and Gulla , 2010 ).
+In section 4 , we present the proposed LFS framework .
+The empirical analysis and the results are presented in section 5 .
+Finally , we conclude the paper and discuss the future work in section 6 .
+2 Related Work Research on sentiment analysis was originally performed to extract overall sentiments from target texts .
+However , as shown in the experiments in ( Turney , 2002 ), the whole sentiment of a document is not necessarily the sum of its parts .
+Recent work has shifted the focus from overall document sentiment to sentiment analysis based on product attributes ( Hu and Liu , 2004 ; Popescu and Etzioni , 2005 ; Ding and Liu , 2007 ; Liu et al ., 2005 ).
+Document overall sentiment analysis is to summarize the overall sentiment in the document , which relies on two finer levels of sentiment annotation : word - level sentiment annotation and phrase - level sentiment annotation .
+The wordlevel sentiment annotation is to utilize the polarity annotation of words in each sentence and summarize the overall sentiment of each sentiment - bearing word to infer the overall sentiment within the text ( Hatzivassiloglou and Wiebe , 2000 ; An - dreevskaia and Bergler , 2006 ; Esuli and Sebastian ', 2005 ; Esuli and Sebastiani , 2006 ; Hatzi - vassiloglou and McKeown , 1997 ; Kamps et al ., 2004 ; Devitt and Ahmad , 2007 ; Yu and Hatzivas - siloglou , 2003 ).
+The phrase - level sentiment annotation focuses sentiment annotation on phrases not words with concerning that atomic units ofexpres - sion is not individual words but rather appraisal groups ( Whitelaw et al ., 2005 ).
+In ( Wilson et al ., 2005 ), the concepts of prior polarity and contextual polarity were proposed .
+This paper presented a system that is able to automatically identify the contextual polarity for a large subset of sentiment expressions .
+In ( Turney , 2002 ), an unsuper - vised learning algorithm was proposed to classify reviews as recommended or not recommended by averaging sentiment annotation of phrases in reviews that contain adjectives or adverbs .
+However , the performances of these approaches are not satisfactory for sentiment analysis on product reviews , where sentiment on each attribute of a product could be so complicated that it is unable to be expressed by overall document sentiment .
+Attributes - based sentiment analysis is to analyze sentiment based on each attribute of a product .
+In ( Hu and Liu , 2004 ), mining product features was proposed together with sentiment polarity annotation for each opinion sentence .
+In that work , sentiment analysis was performed at the product attributes level .
+In ( Liu et al ., 2005 ), a system with framework for analyzing and comparing consumer opinions of competing products was proposed .
+The system made users be able to clearly see the strengths and weaknesses of each product in the minds of consumers in terms of various product features .
+In ( Popescu and Etzioni , 2005 ), Popescu and Etzioni not only analyzed polarity of opinions regarding product features but also ranked opinions based on their strength .
+In ( Liu et al ., 2007 ), Liu et al .
+proposed Sentiment - PLSA that analyzed blog entries and viewed them as a document generated by a number of hidden sentiment factors .
+These sentiment factors may also be factors based on product attributes .
+In ( Lu and Zhai , 2008 ), Lu et al .
+proposed a semi - supervised topic models to solve the problem of opinion integration based on the topic of a product ' s attributes .
+The work in ( Titov and McDonald , 2008 ) presented a multi - grain topic model for extracting the ratable attributes from product reviews .
+In ( Lu et al ., 2009 ), the problem of rated attributes summary was studied with a goal of generating ratings for major aspects so that a user could gain different perspectives towards a target entity .
+In a most recent research work ( Wei and Gulla , 2010 ), Wei and Gulla proposed the HL - SOT approach that sufficiently utilizes the hierarchical relationships among a product attributes and solves the sentiment analysis problem in a hierarchical classification process .
+However , the HL - SOT approach proposed in ( Wei and Gulla , 2010 ) uses a globally unified index term space to encode target texts for different nodes which is deemed to limit the performance of the HL - SOT approach .
+Therefore , the LFS framework proposed in this paper aims at overcoming the weakness of the HL - SOT approach and consequently improving its performance by generating a locally customized index term space for each node .
+3 The HL - SOT Approach Review In the HL - SOT approach ( Wei and Gulla , 2010 ), each target text is indexed by a vector x G X , X = Rd .
+Weight vectors Wj ( 1 < i < N ) define linear - threshold classifiers of each node i in SOT so that the target text x is labeled true by node i if x is labeled true by i ' s parent node and Wj • x > 0j .
+The parameters Wj and 0j are learned from the training data set : D = {( r , l )\ r G X , l G Y }, where Y denotes the set of label vectors .
+In the training process , when a new instance rt is observed , each row vector wi ) t is updated by a regularized least squares estimator given by : where I is a d x d identity matrix , Q ( i , t — 1 ) denotes the number of times the parent of node i observes a positive label before observing the instance rt , Si , Q ( i , t - i ) = K , r ^^- i )] is a d x Q ( i , t — 1 ) matrix whose columns are the instances a Q ( i , t — 1 )- dimensional vector of the corresponding labels observed by node i .
+The Formula 1 restricts that the weight vector wi ; t of the classifier i is only updated on the examples that are positive for its parent node .
+Then the label vector yrt is computed for the instance rt , before the real label vector lrt is observed .
+Then the current threshold vector 9t is updated by : where e is a small positive real number that denotes a corrective step for the current threshold vector 9t .
+After the training process for each node of SOT , each target text is to be labeled by each node i parameterized by the weight vector Wi and the threshold 9i in the hierarchical classification process .
+4 The Localized Feature Selection In this section , we propose the LFS framework to generate a locally customized index term space for each node of SOT respectively .
+We first discuss why localized feature selection is needed for the HL - SOT approach .
+Then we define the concept of local hierarchy of SOT to introduce the local feature selection scope of a node , followed by a presentation on the local hierarchy based feature selection process .
+4 . 1 Why Localized Feature Selection for the HL - SOT One deficiency of the HL - SOT approach is that it uses a globally unified index term space to index target texts , which cannot efficiently encode feature information required by each local individual node of SOT .
+When we look into the detailed classification process of each node of SOT , we observe the following two types of phenomena .
+Firstly , SOT organizes domain knowledge in a tree like structure .
+Within a particular domain knowledge represented by SOT , nodes that stay in different branches of SOT represent independent different attributes in that domain .
+In this way , feature terms ( e . g ., the term " ergonomics ") that are relevant to a node ( e . g ., the node " design and usability ") might be irrelevant to other nodes ( e . g ., the node " image quality ") that stay at another branches of SOT ; Secondly , the HL - SOT approach labels each target text in a hierarchical order which ensures that each target text that comes to be handled by a node has already been labeled as true by its parent node .
+Due to this characteristic , feature terms ( e . g ., the term " noise ") that are significant to a node i ( e . g ., the node " noise ") might become a trivial terni for i ' s child nodes ( e . g ., the nodes " noise +" and " noise -").
+Therefore , the purpose of the localized feature selection is to filter out irrelevant terms that are insignificant to each individual node and build a locally customized index term space for the node so that the performance of the node can be improved .
+4 . 2 Local Feature Selection Scope for a Node In order to select locally customized feature terms for each individual node , we need to define a suitable scope , called local feature selection scope , within which the feature selection process can be effectively conducted for the node .
+Since the HL - SOT approach is a hierarchical classification process , before we introduce the local scope for a node we first give a formal definition on local hierarchy of SOT .
+Definition 1 [ Local Hierarchy ] A local hierarchy Au of SOT is defined to be formed by all the child nodes of u in SOT , where the node u must be a non - leafnode ofthe SOT .
+By the Definition 1 , we say all the child nodes of u are on the same local hierarchy under u which is denoted by Au .
+For examples , in Fig .
+2 nodes " camera +", " design and usability ", " image quality ", " lens ", " camera -" are deemed on the same local hierarchy under the node " camera " and nodes " weight +", " weight -" are deemed on the same local hierarchy under the node " weight ", etc .
+In the hierarchical labeling process of the HL - SOT approach , after a target text is labeled as true by a node i it will go further to the local hierarchy under i and is to be labeled by all nodes on the local hierarchy Ai .
+For a target text the labeling processes of nodes on Ai locally can be considered as a multi - label classification process where each node is a local label .
+Therefore , the measurement for selecting terms as features should be calculated among nodes on the same hierarchy .
+Hence , the local scope for a node is defined within the local hierarchy which the node is on .
+4 . 3 Local Hierarchy Based Feature Selection In the proposed LFS framework , local feature selection for a node i of SOT is performed within the local scope of the node i .
+Since nodes on the same local hierarchy share the same local scope , local feature selection process for all nodes of SOT is achieved in local hierarchy based manner .
+Specifically , for the feature selection process on a local hierarchy A , let c1 , c2 , cK denote the K nodes on A .
+Let D denote the training data set for the HL - SOT approach .
+Let DCk denote the set of instances in D that contains the label of the node ck ( 1 ^ k ^ K ).
+Let Da denote the training corpus for the local hierarchy A which is the set of In this paper , we also call it " local scope " for short .
+Figure 2 : All local hierarchies of the example SOT : the grey nodes sharing the same parent node in dashed line are called on the same local hierarchy under the parent node all instances in the training data set D that contain any label of nodes on the local hierarchy A : Da = U K = 1 DCk .
+Let VCk denote the set of all the vocabularies that appears in DCk .
+Let sCk ( w ) denote the term score that measures the suitability of w as a feature for node ck .
+Let FCk denote the set of feature terms selected for ck .
+Let dCk denote the number of features to be selected in FCk .
+A local feature selection process for nodes on the local hierarchy A is described in Algorithm 1 .
+Algorithm 1 Localized Feature Selection Algorithm DATA INITIALIZATION : 1 : for each node ck on A do 2 : Establish Dcfc containing instances being labeled true by ck ; 3 : Establish the vocabulary set ; 4 : Remove stop words from Vck ; 5 : end for 6 : Establish the training corpus : Da = Ufc — 1 ; BEGIN 7 : for each node c on A do 8 : for each term w G VCk do with training corpus Da and data instance set Dck : 9 : Calculate ( w ) with a specified feature selection algorithm ; In the data initialization phase of the Algorithm 1 , the data instance set DCk and vocabulary set VCk for each node on the local hierarchy A as well as the training corpus Da are established .
+In a local feature selection process , a term score sCk ( w ) for each term w g VCk can be calculated by a specified feature selection algorithm , taking Da as the training corpus and DCk as the data instance set in the class ck .
+The local feature selection process can employ any specific feature selection algorithm to calculate the term scores .
+After all terms in VCk are calculated , those terms with top dCk scores are selected to establish the feature space FCk for the node ck .
+Since the number of terms in VCkvaries from node to node , in order to produce a rational dimensionality dCk for the established feature space FCk , we introduce a feature selection rate , denoted by 7 , to control dCk for each node ck , i . e - dCk = r \ VCk \ x n . After local feature selection processes for all the nods of SOT are accomplished , a locally customized index term space FCk for each node ck is established .
+Each target text will be respectively indexed by a customized vector xCk g xCk ( xCk = rdck ) when it goes through the hierarchical classification process of the HL - SOT approach .
+In next section , we will present the empirical analysis on evaluating the proposed LFS framework .
+5 Empirical Analysis In this section , we conduct extensive experiments to empirically analyze the proposed LFS framework .
+Our experiments are intended to address the following questions : ( 1 ) can the classification performance of the HL - SOT approach be improved with the LFS framework ; ( 2 ) how much computational efficiency can be gained for the HL - SOT to be implemented in the LFS framework ; ( 3 ) how are the comparative performances produced by different feature selection algorithms when employed in the proposed LFS framework .
+5 . 1 Data Set Preparation We construct our data set based on the digital camera review data set used in the HL - SOT approach ( Wei and Gulla , 2010 ).
+In total , the constructed data set contains 1500 snippets of customer reviews on digital cameras , where 35 attributes of a digital camera are mentioned in the review data .
+We build an ontology structure to organize the mentioned attributes and label each review text with correspondent attributes as well as sentiments , which complying the rule that if a review text is assigned with a label of a node then it is assigned with a label of the parent node .
+We randomly divide the labeled data set into five folds so that each fold at least contains one example instance labeled by each attribute node .
+To catch the statistical significance of experimental results , we perform 5 cross - fold evaluation by using four folds as training data and the other one fold as testing data .
+All the experimental results presented in this section are averaged over 5 runs of each experiment .
+5 . 2 Evaluation Metrics Since the existing HL - SOT approach is a hierarchical classification process , we use the same three classic loss functions ( Wei and Gulla , 2010 ) for measuring classification performance .
+They are respectively the One - error Loss ( O - Loss ) function , the Symmetric Loss ( S - Loss ) function , and the Hierarchical Loss ( H - Loss ) function : • One - error loss ( O - Loss ) function is defined as : where y is the prediction label vector and l is the true label vector ; B ( S ) is a boolean function which is 1 if and only if the statement S is true , otherwise it is 0 .
+• Symmetric loss ( S - Loss ) function is defined as : • Hierarchical loss ( H - Loss ) function is defined as : where A denotes a set of nodes that are ancestors of node i in SOT .
+5 . 3 Performance Comparison In this section , we conduct experiments to show performance improvement from the proposed LF - S framework .
+The performance considered here include both classification performance and computational efficiency .
+We use the existing HL - SOT approach as a baseline .
+Since the HL - SOT approach used terms ' document frequencies ( D - F ) ( Manning et al ., 2008 ) algorithm to select features to build the globally unified index term space , employing the same DF feature selection algorithm we apply the proposed LFS framework on the HL - SOT approach and call the implemented method " DF - SOT ".
+The only difference between HL - SOT and DF - SOT is the index term space for each node of SOT , i . e ., in the HL - SOT all the nodes using the globally unified index term space while in the DF - SOT each node respectively using a locally customized index term space .
+In this way , the performance difference between the two methods will indicate the effect of the proposed LFS framework .
+Since the three loss functions are respectively well - defined by each formula and self - explained by their names , due to the space limitation , we do not present more explanation .
+5 . 3 . 1 Comparison on Classification Performance We conduct experiments to investigate whether the classification performance of the HL - SOT can be improved when it is implemented with the LFS framework .
+Fig .
+3 presents the experimental results of classification accuracies between HL - SOT and DF - SOT .
+In the experiments , the dimensionality d of the globally unified index term space of the HL - SOT approach is set to 270 , which is large enough for the HL - SOT approach to reach its best performance level .
+The feature selection rate 7 for the locally customized index term space of the DF - SOT approach is set to 0 . 2 and 0 . 3 , which brings respectively 80 % and 70 % vocabulary reduction .
+The value of the corrective step e is set to varying from 0 . 005 to 0 . 05 with each step of 0 . 005 so that each running approach can achieve its best performance with a certain value of e . From Fig .
+3 , we can observe that when 7 = 0 . 2 the DF - SOT approach reaches its best performance with 0 . 6953 ( e = 0 . 02 ) on O - Loss , 1 . 5516 ( e = 0 . 045 ) on S - Loss , and 1 . 0578 ( e = 0 . 04 ) on H - Loss , and that when 7 = 0 . 3 the DF - SOT approach reaches its best performance with 0 . 6953 ( e = 0 . 015 ) on O - Loss , 1 . 5531 ( e = 0 . 02 ) on S - Loss , and 1 . 0547 ( e = 0 . 025 ) on H - Loss , which outperforms the best performance of the HL - SOT approach on O - Loss 0 . 6984 ( e = 0 . 025 ), on S - Loss 1 . 6188 ( e = 0 . 025 ), and on H - Loss 1 . 0969 ( e = 0 . 05 ).
+This indicates that with the proposed LFS framework , compared with the HL - SOT approach , the DF - SOT approach generally improves the classification performance .
+Figure 3 : Classification Performance ( A Smaller Loss Value Means Better Classification Performance ) 5 . 3 . 2 Comparison on Computational Efficiency We conduct further experiments to analyze computational efficiency gained through the proposed LFS framework .
+All the experiments are conducted on a normal personal computer containing an Intel Pentium D CPU ( 2 . 4 GHz , Dual Core ) and 4G memory .
+Fig .
+4 summarizes the computational time consumed by experiment runs respectively for HL - SOT ( d = 270 ) and DF - SOT ( 7 = 0 . 2 and 7 = 0 . 3 ).
+From Fig .
+4 , we can observe that the HL - SOT approach consumes 15917695 ms to inish an experimental run , although the DF - SOT approachonly takes respectively 2 . 29 % ( with 7 = 0 . 2 ) and 4 . 91 % ( with 7 = 0 . 2 ) of computational time as the existing HL - SOT approach consumes and achieves even better classiication performance than the HL - SOT approach ( see Fig . 3 ).
+This conirms that much computational eficien - cy can be gained for the HL - SOT approach to be implemented in the LFS framework while better classiication performance is ensured .
+Since the computational complexity of each node classiier of DF - SOT is the same as HL - SOT , the computational eficiency gained from the proposed LFS framework should be attributed to the dimension reduction of the index term space .
+5 . 4 Comparative Study on Feature Selection Algorithms The proposed LFS framework for the HL - SOT approach can employ various feature selection algorithms to select local features for each individual node .
+In this section , we conduct intensive experiments to comparatively study ive classic feature selection algorithms employed within the LFS framework .
+The ive employed feature selection algorithms are respectively document frequency ( DF ) ( Manning et al ., 2008 ) based feature selection algorithm , mutual information ( MI ) ( Manning et al ., 2008 ; Church and Hanks , 1990 ) based feature selection algorithm , %- statistic ( CHI ) ( Manning et al ., 2008 ) based feature selection algorithm , information gain ( IG ) ( Mitchell , 1997 ) based feature selection algorithm as well as term strength ( TS ) ( Wilbur and Sirotkin , 1992 ) based feature selection algorithm .
+Figure 4 : Time Consuming ( ms ) In the experiments , the feature selection rate 7 is set to 0 . 2 and 0 . 3 respectively .
+The value of the corrective step e varies from 0 . 005 to 0 . 05 with each step of 0 . 005 .
+The experimental results are summarized in Fig .
+From Fig .
+5 it is observed that DF , MI , and TS feature selection algorithms achieve generally better performances than CHI and IG feature selection algorithms when they are employed in the proposed LFS framework .
+Speciically , the TS algorithm is generally the best among the ive employed algorithms while the DF algorithm can also achieve as Due to the space limitation , details of the studied feature selection algorithms are not reviewed here .
+The mechanism of each algorithm can be read in the related references .
+Corrective Step Corrective Step Corrective Step Corrective Step Figure 5 : Comparative Performances on the Employed Feature Selection Algorithms comparable good performance as the TS algorithm does .
+This is due to that both the TS and the DF algorithms favor high frequency terms and vocabularies used in customer reviews on a specific product are usually overlapping .
+When 7 = 0 . 3 , it can be also observed that the MI algorithm achieves as comparable good performance as the TS algorithm does .
+This is because , in customer reviews , although some vocabularies are rarely used they always occur as significant features in some specific categories .
+For example , " ergonomics " is a rare term but almost always appears in the class of " design and usability ".
+Therefore , the MI algorithm can also achieve relatively better performance through favoring rare terms that always co - occur with specific classes .
+6 Conclusions and Future Work In this paper , we propose a LFS framework tailored to the HL - SOT approach to sentiment analysis .
+In the proposed LFS framework , significant feature terms of each node can be selected to construct the locally customized index term space for the node so that the classification performance and computational efficiency of the existing HL - SOT approach are improved .
+The effectiveness of the proposed LFS is validated against a humanlabeled data set .
+Further comparative study on five employed feature selection algorithms within the proposed LFS framework indicates that the TS , DF , and MI algorithms achieve generally better performance than the CHI and IG algorithms .
+Among the five employed algorithms , the TS algorithm is the best to be employed by the proposed LFS framework .
+Although the proposed LFS framework shows its effectiveness of improving on the HL - SOT approach , its improvement on the classification performance is not so obvious compared with its much improvement on computational efficiency .
+Due to the limited number of instances in the training data set , the classification performance still suffers from the problem that unobserved terms appear in testing cases .
+This problem is inherently raised by the bag - of - word model .
+A concept - based indexing scheme that can infer concepts of unobserved terms might alleviate the problem .
+We plan to investigate on this issue in the future work .
+Acknowledgments The authors would like to thank the anonymous reviewers for the helpful comments on the manuscript .
+This work is funded by the Research Council of Norway under the VERDIKT research programme ( Project No .

@@ -1,0 +1,37 @@
+P14-1086: Query-Chain Focused Summarization
+N13-2011: Helpfulness-Guided Review Summarization
+P06-1039: Bayesian Query-Focused Summarization
+N13-1136: Towards Coherent Multi-Document Summarization
+N09-1041: Exploring Content Models for Multi-Document Summarization
+P10-1084: A Hybrid Hierarchical Model for Multi-Document Summarization
+C14-1157: Query-Focused Opinion Summarization for User-Generated Content
+E14-4046: Efficient Online Summarization of Microblogging Streams
+C12-1136: A Supervised Aggregation Framework for Multi-Document Summarization
+P11-1052: A Class of Submodular Functions for Document Summarization
+C10-2049: Towards Automated Related Work Summarization
+P11-1050: Discovery of Topically Coherent Sentences for Extractive Summarization
+P09-2075: Multi-Document Summarization using Sentence-based Topic Models
+P13-2099: Evolutionary Hierarchical Dirichlet Process for Timeline Summarization
+W14-4410: Experimental Design to Improve Topic Analysis Based Summarization
+E12-1022: DualSum: a Topic-Model based approach for update summarization
+P11-2113: Probabilistic Document Modeling for Syntax Removal in Text Summarization
+C10-1111: Multi-Document Summarization via the Minimum Dominating Set
+E14-1075: Improving the Estimation of Word Importance for News Multi-Document Summarization
+D11-1105: Generating Aspect-oriented Multi-Document Summarization with Event-aspect model
+P13-1099: Using Supervised Bigram-based ILP for Extractive Summarization
+Y14-1054: On-line Summarization of Time-series Documents using a Graph-based Algorithm
+C12-1182: SentTopic-MultiRank: a Novel Ranking Model for Multi-Document Summarization
+W12-1605: Unsupervised Topic Modeling Approaches to Decision Summarization in Spoken Meetings
+Q13-1008: A Novel Feature-based Bayesian Model for Query Focused Multi-document Summarization
+C14-1113: Query-focused Multi-Document Summarization: Combining a Topic Model with Graph-based Semi-supervised Learning
+C10-2046: Learning to Model Domain-Specific Utterance Sequences for Extractive Summarization of Contact Center Dialogues
+C14-1187: Empirical analysis of exploiting review helpfulness for extractive summarization of online reviews
+N12-1041: Intra-Speaker Topic Modeling for Improved Multi-Party Meeting Summarization with Integrated Random Walk
+P14-2055: A Bayesian Method to Incorporate Background Knowledge during Automatic Text Summarization
+D13-1069: Automatically Determining a Proper Length for Multi-Document Summarization: A Bayesian Nonparametric Approach
+P13-2101: Sequential Summarization: A New Application for Timely Updated Twitter Trending Topics
+P14-2040: Detection of Topic and its Extrinsic Evaluation Through Multi-Document Summarization
+D14-1156: Leveraging Effective Query Modeling Techniques for Speech Recognition and Summarization
+N15-1145: Improving Update Summarization via Supervised ILP and Sentence Reranking
+W13-3108: Multilingual Summarization: Dimensionality Reduction and a Step Towards Optimal Term Coverage
+P14-1115: Abstractive Summarization of Spoken and Written Conversations Based on Phrasal Queries

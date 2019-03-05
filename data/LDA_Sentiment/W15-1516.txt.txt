@@ -1,0 +1,134 @@
+A Vector Space Approach for Aspect Based Sentiment Analysis Vector representations for language has been shown to be useful in a number of Natural Language Processing tasks .
+In this paper , we aim to investigate the effectiveness of word vector representations for the problem of Aspect Based Sentiment Analysis .
+In particular , we target three sub - tasks namely aspect term extraction , aspect category detection , and aspect sentiment prediction .
+We investigate the effectiveness of vector representations over different text data and evaluate the quality of domain - dependent vectors .
+We utilize vector representations to compute various vector - based features and conduct extensive experiments to demonstrate their effectiveness .
+Using simple vector based features , we achieve Fl scores of 79 . 91 % for aspect term extraction , 86 . 75 % for category detection , and the accuracy 72 . 39 % for aspect sentiment prediction .
+1 Introduction Natural language representation in continuous vector space has been successfully used in many NLP tasks ( Al - Rfou et al ., 2013 ; Bansal et al ., 2014 ; Bowman et al ., 2014 ; Boyd - Graber et al ., 2012 ; Chen and Rudnicky , 2014 ; Guo et al ., 2014 ; Iyyer et al ., 2014 ; Levy and Goldberg , 2014 ; Mikolov et al ., 2013c ).
+Previous research attempted to employ vector representations to present the syntactic and semantic information in textual content .
+In this paper , we aim to investigate the effectiveness of vector space representations for Aspect Based Sentiment Analysis in which we aim to capture both semantic and sentiment information encoded in user generated content such as product reviews .
+Sentiment analysis or opinion mining deals with computational analysis of people ' s opinions , sentiments , attitudes and emotions towards target entities such as products , organizations , individuals , topics and their attributes ( Liu , 2012 ).
+The majority of early approaches to this research problem ( Pang et al ., 2002 ; Pang and Lee , 2005 ; Baccianella et al ., 2009 ) attempted to detect the overall sentiment of a sentence , paragraph , or text span regardless of the entities ( e . g ., restaurants ) and their aspects ( e . g ., food , service ) expressed in context .
+However , only considering overall sentiments fails to capture the sentiments over the aspects on which an entity can be reviewed ( Lu et al ., 2011 ).
+For example , although the restaurant review shown in Table 1 might express an overall positive sentiment , it additionally expresses a positive sentiments toward the restaurant ' s food and service , as well as negative sentiment toward the restaurant ' s ambiance .
+To achieve this aim , aspect based sentiment analysis attempts to extract the aspects ( or semantic labels ) of given target entities and the sentiment expressed towards each aspect ( Hu and Liu , 2004 ; Liu , 2012 ).
+For this purpose , three sub - tasks need to be addressed : ( 1 ) aspect term extraction , ( 2 ) aspect category detection , and ( 3 ) aspect sentiment prediction .
+We briefly describe these sub - tasks here : Aspect term extraction identifies aspect terms ( or semantic labels ) appeared in a given text about a target entity .
+For instance , in the review in Table 1 , the aspects are " orecchiette with sausage and Our agreed favorite is the orecchiette with sausage and chicken and usually the waiters are kind enough to split the dish in half so you get to sample both meats .
+But , the music which is sometimes a little too heavy for my taste .
+Table 1 : An example of restaurant review .
+chicken ", " waiters ", " dish ", " meats " and " music ", and the target entity is " restaurant ".
+Multi - word aspect terms are treated as single aspect , like " orecchiette with sausage and chicken " in the example .
+Aspect category detection identifies ( latent ) aspect categories available in a given text .
+Aspect categories are coarser than aspect terms , and they do not necessarily occur as terms in the text .
+For example , the review in Table 1 contains the latent aspect categories " food ", " service ", and " ambiance ".
+Aspect categories are often considered as predefined categories ( e . g ., " price ", " food ") with respect to the target entities .
+Aspect sentiment prediction identifies the sentiment toward aspect terms as positive , negative , neutral , or conflict ( i . e ., both positive and negative ) for a given set of aspect terms in a text .
+For example , in the review in Table 1 , the aspects " orecchiette with sausage and chicken " and " waiters " are positive , while " music " is negative , and " dish " and " meats " are neutral .
+To tackle the above problems and investigate the utility of vector representation models for aspect based sentiment analysis , we present a supervised approach in which vector representations of aspect terms and categories are effectively utilized for aspect based sentiment analysis .
+Our approach outperforms the baselines and provides significant performance using the simple vector - based features as compared to previous approaches using different text - based features ( Pontiki et al ., 2014 ).
+The remainder of this paper describes our approach ( Section 2 ), followed by experimental results and analysis ( Section 3 ), and finally conclusion .
+2 Method Distributed vector representations , described by Schütze ( Schütze , 1992a ; Schütze , 1992b ), associate similar vectors with similar words and phrases .
+These vectors provide useful information for the learning algorithms to achieve better performance in Natural Language Processing tasks ( Mikolov et al ., 2013c ).
+Most approaches to computing vector representations use the observation that similar words appear in similar contexts ( Firth , 1957 ; Sahlgren , 2006 ; Mikolov , 2012 ; Socher , 2014 ).
+To compute the vector representations of words , we use the skip - gram model of Word2Vec ( Mikolov , 2014 ; Mikolov et al ., 2013a ; Mikolov et al ., 2013b ; Mikolov et al ., 2013d ).
+The Skip - gram model aims to find word representations that are useful for predicting the surrounding words in a sentence or document ( Mikolov et al ., 2013b ).
+The model needs a large amount of unstructured text data for training the word vector representations .
+When training the skip - gram model we use the GoogleNews dataset ( Mikolov , 2014 ) that contains 3 million unique words and about 100 billion tokens .
+In addition , to account for the effect of domain information on the quality of word representations , we employ a dataset of restaurant reviews from Yelp that contains 131 , 778 unique words and about 200 million tokens .
+We constructed 300 - dimensional word vectors for all these words .
+We propose to utilize word vector representations to compute vector - based features for the three sub - tasks of aspect based sentiment analysis .
+We employ these features in a supervised learning setting to address the above tasks .
+Our data ( reviews ) are first analyzed by Stanford tokenizer ( Manning et al ., 2010 ), POS - tagger ( Toutanova et al ., 2003 ) and dependency - tree extractor ( de Marneffe and Manning , 2008 ).
+Then , the pre - processed data and word representations are used to compute task - specific features as explained in the following subsections .
+2 . 1 Aspect Term Extraction The objective of this sub - task is to extract aspect terms from reviews with respect to a target entity ( e . g , restaurant ) as explained in Section 1 .
+This task can be considered as part of Semantic Role Labeling ( SRL ).
+Previous research has shown that Conditional Random Fields ( CRFs ) ( Lafferty et al ., 2001 ) ^ his dataset is available on : http : / / www .
+yelp .
+com / dataset_challenge .
+and sequence tagging with Structural Support Vector Machines ( SVM - HMM ) ( Altun et al ., 2003 ) are effective for the SRL task ( Cohn and Blunsom , 2005 ).
+As such , we employ CRFsuite ( Okazaki , 2007 ) and SVM - HMM ( Altun et al ., 2003 ) with word vector representations as features to label the token sequence with respect to two possible tags : " Aspect " and " Not - Aspect ", where an aspect can be multiword .
+To the best of our knowledge , this is the first attempt of solving the problem of aspect term extraction using CRFsuite or SVM - HMM with vector representations as features .
+Furthermore , in addition to the above vector features , we employ the POS - tags information as an extra feature .
+This is mainly because " nouns " are strong candidates to be aspects ( Blinov and Kotelnikov , 2014 ; Pontiki et al ., 2014 ).
+However , this feature is more effective for the single term aspects as we will discuss in Section 3 .
+2 . 2 Aspect Category Detection The objective of this sub - task is to detect the aspect categories expressed in a sentence with respect to a given set of categories ( e . g ., food , service , price , ambience , anecdotes / miscellaneous ) as explained in Section 1 .
+Since a sentence can contain several categories , we employ multi - label one - vs - all Support Vector Machines ( SVMs ) in conjunction with the following vector - based features for a given sentence : Normalized Average Vector ( NAV ) is obtained by averaging the vector representations of the words in the sentence .
+That is , given a sequence of words S = 101 , 102 , wn , the normalized average vector is computed as follows : T N V where N is the number of words , Vi is the vector representation of Wi in the sentence , and \ x \ means the L2 — norm of x .
+In addition , we only consider adjectives , adverbs , nouns , and verbs to compute the NAV .
+This is because these word types capture most semantic and sentiment information in a sentence .
+Token Numbers ( TN ) is number of words in sentence that used to compute NAV .
+Although NAV is effective for this task , some information like TN is missing during the averaging process .
+Category Similarities ( CS ) are computed for each predefined aspect category .
+To compute CS , we first identify a set of words ( called seeds ) for each category by selecting top 20 nearest word vectors to the vector of category name .
+Then , for each category , we compute the cosine similarity between its seed vectors and the word vectors of the input sentence .
+We consider the maximum cosine similarity as a feature representing the similarity between the category and the input sentence .
+2 . 3 Aspect Sentiment Prediction The objective of this task is to predict the sentiments for a given set of aspects in a sentence as positive , negative , neutral and conflict ( i . e ., both positive and negative ) as explained in Section 1 .
+For this task , we apply one - vs - all SVM and the following vector - based features for a given aspect : Average Dependency Vector ( ADV ) is obtained by averaging the vector representations of the dependency words ( DW ) for the aspect .
+We define dependency words for an aspect as the words that modify or modified by the aspect in dependency tree of the input sentence .
+Rating Vectors ( RV ) are the same as ADV features but they are computed using the vector representations trained on different subsets of our data .
+We have five subsets , each subset contains only reviews with a specific review rating .
+Ratings range from 1 ( strong negative ) to 5 ( strong positive ).
+Previous researches showed the impact of the word ( w ) distribution over different ratings ( r ) to compute the sentiment of the word ( i . e ., P ( r \ w )) ( de Marneffe et al ., 2010 ) and construct opinion lexicon ( Amiri and Chua , 2012 ).
+Using this feature , we can investigate the distribution of words and their vector representations in different ratings .
+Positive / Negative Similarities ( PNS ) are obtained by computing the highest cosine similarity between DW vectors and the vectors of a set of positive / negative sentiment words .
+The sentiment words are automatically computed by selecting top 20 of nearest neighbor word vectors to the vectors of the word " excellent " for positive and " poor " for negative seeds .
+Furthermore , the difference between the positive and negative similarities is used as an additional feature .
+3 Evaluation and Results We evaluate our vector - based approach on the aspect term extraction , aspect category detection , and aspect sentiment prediction tasks .
+We use the restaurant review dataset provided by ( Pontiki et al ., 2014 ; Ganu et al ., 2009 ) that contains 3 , 041 training and 800 test sentences .
+The training dataset contains 3 , 693 aspects and 3 , 713 categories , and test dataset contains 1 , 134 aspects and 1 , 025 categories .
+In the dataset , the predefined aspect categories are food , service , price , ambiance , anecdotes / miscellaneous , and Table 2 shows the distributions of these categories over the dataset .
+Aspect Term Extraction The results of our vector - based approach for this task are shown in Table 3 .
+As explained in Section 2 . 1 , we employ CRFs and SVM - HMM for this task .
+As features we utilize POS - tags of aspect terms and their vector representations computed by wor d2 ve c trained on Yelp ( Y ) or GoogleNews ( G ) data .
+Their corresponding results are shown in the fourth and fifth rows of the table .
+These results indicate the vector representations trained on Yelp data leads to a high performance in both SVM and CRF .
+This is while the Google - News dataset contains a larger vocabulary of around 3M words as compared to the Yelp data with around 100K words .
+This implies the effectiveness of the domain in the quality of word representations .
+To evaluate the effectiveness of the vector - based features , we repeat our experiments with only POS - tags of the aspect terms .
+The performance is significantly dropped , as shown in the third row of the table .
+Although the nouns can be strong candidates for aspects ( Blinov and Kotelnikov , 2014 ), the majority of aspects , like multi - word aspects cannot be captured by only considering their POS - tags .
+The first cell of Table 3 shows the Fl performance of 47 . 15 % produced by our baseline ( Pontiki et al ., 2014 ).
+The baseline creates a dictionary of aspect terms from the training data , and then a given sequence of words are tagged as aspects by looking up the dictionary .
+This approach cannot handle the out of vocabulary aspects .
+Aspect Category Detection The results of our vector - based approach for this task are shown in Table 4 .
+As explained in Section 2 . 2 , SVMs are applied to this task with a combination of Normalized Average Vector ( NAV ), Token Numbers ( TN ) and Category Similarities ( CS ) features for a given sentence .
+These features employ the word2vec trained on Yelp ( Y ) or GoogleNews ( G ) to obtain the vector representations .
+Their corresponding results are shown in the fifth and sixth rows of the table .
+The results imply the impact of our vector - based features that lead to the highest performance using the Yelp data .
+To evaluate the effectiveness of above vector - based features , we repeat our experiments with different combination of them .
+It leads to the lower performances by using NAV and TN and ignoring the CS , as shown in the forth row of Table 4 ., and by using NAV and ignoring both CS and TN , as shown in the third row of the table .
+The first cell of Table 4 shows an Fl performance of 65 . 65 % obtained by the baseline ( Pontiki et al ., 2014 ).
+Given a sentence , the baseline first retrieves a set of K similar sentences from the training data .
+The similarity of two sentences is then determined by computing the Dice Coefficient between the sets of distinct words in the two sentences ( Pontiki et al ., 2014 ).
+Finally , the input sentence is tagged by the most frequent aspect categories appeared in the K retrieved sentences .
+The limitation of this approach is that it employs the text - based similarity measure to measure the semantic similarity between the sentences .
+However , the results in the table shows that the vector - based features can better capture the semantic similarity between the sentences as compared to the text - based features .
+Table 2 : Category distributions over the dataset .
+Table 4 : Results for the aspect category detection task .
+Aspect Sentiment Prediction The results of our approach for this task are shown in Table 5 .
+The SVMs are applied to this task and the parameter C for SVMs is optimized through cross - validation on training data .
+The third row of the table shows the results when we use the Average Dependency Vector ( ADV ) computed based on word2vec trained on the whole Yelp ( Y ) data .
+As explained in Section 2 . 3 , to investigate the distribution of words ( Amiri and Chua , 2012 ) and their vector representations over different ratings , we present Rating Vectors ( RV ).
+RV features include 4 ADVs in which four vector representations for a word are computed on Yelp reviews with ratings 1 , 2 , 4 , and 5 , respectively .
+Reviews with the rating 3 are not considered , because they are mostly of neutral or conflict orientation .
+Using RV results in a better performance , as shown in the fourth row of Table 5 .
+However , there is not a significant difference between the results of experiments with RV and ADV .
+The reason is that most of the reviews in the Yelp data have positive ratings ( i . e ., ratings 4 and 5 ) and as such the distributions of words does not dramatically changed as compared to the whole review data .
+The highest performance is achieved when we use the combination of RV and Positive / Negative Similarities ( PNS ) features , as shown in the fifth row of the Table 5 .
+Since the vector representations for some positive and negative words ( e . g ., good and bad ) are similar , PNS feature provides more information for a classifier to distinguish between these vectors by defining a set of positive and negative vectors , as explained in Section 2 . 3 .
+The first cell of Table 5 shows a performance of 64 . 28 % obtained by our baseline ( Pontiki et al ., 2014 ).
+The baseline tags a given aspect in a test sentence by the most frequent sentiment for the aspect in top K similar training sentences to the test sentence .
+In addition , for the out of vocabulary aspects , the majority sentiment over all aspects in training data will be assigned .
+4 Related Work Previous works on aspect based sentiment analysis ( Liu , 2012 ; Pang and Lee , 2008 ) attempted to tackle sentiment and semantic labeling using different approaches such as sequence labeling ( Choi and Cardie , 2010 ; Yang and Cardie , 2013 ), syntactic patterns ( Zhao et al ., 2012 ; Xu et al ., 2013 ; Zhou et al ., 2013 ), topic models ( Lu et al ., 2011 ).
+While some works first separate the semantic and sentiment information and then label them ( Mei et al ., 2007 ; Zhao et al ., 2010 ), some other previous works presented joint models for joint semantic and sentiment labeling ( Lin and He , 2009 ; lo and Oh , 2011 ).
+Table 3 : Results for the aspect term extraction task .
+Table 5 : Results for the aspect sentiment prediction task .
+lating semantically similar words , in this research , we investigated the impact of word representations techniques for aspect based sentiment analysis .
+In particular , we aimed to employ vector - based features using word representations to capture both semantic and sentiment information .
+5 Conclusion In summary , we employed vector representations of words to tackle the problem of Aspect Based Sentiment Analysis .
+We introduced several effective vector - based features and showed their utility in addressing the aspect term extraction , aspect category detection , and aspect sentiment prediction sub - tasks .
+Our vector space approach using these features performed well compared to the baselines .
+To further improvement , these vector - based features can be combined with text - based features used typically for each sub - task .
+Acknowledgments This research was supported in part by the Qatar Computing Research Institute ( QCRI ).
+In addition , we would like to thank Maria Pontiki from the Institute for Language and Speech Processing for providing us access to the database .

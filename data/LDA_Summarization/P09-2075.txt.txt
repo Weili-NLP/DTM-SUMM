@@ -1,0 +1,100 @@
+Multi - Document Summarization using Sentence - based Topic Models Most of the existing multi - document summarization methods decompose the documents into sentences and work directly in the sentence space using a term - sentence matrix .
+However , the knowledge on the document side , i . e .
+the topics embedded in the documents , can help the context understanding and guide the sentence selection in the summarization procedure .
+In this paper , we propose a new Bayesian sentence - based topic model for summarization by making use of both the term - document and term - sentence associations .
+An efficient variational Bayesian algorithm is derived for model parameter estimation .
+Experimental results on benchmark data sets show the effectiveness of the proposed model for the multi - document summarization task .
+1 Introduction With the continuing growth of online text resources , document summarization has found wide - ranging applications in information retrieval and web search .
+Many multi - document summarization methods have been developed to extract the most important sentences from the documents .
+These methods usually represent the documents as term - sentence matrices ( where each row represents a sentence and each column represents a term ) or graphs ( where each node is a sentence and each edge represents the pairwise relationship among corresponding sentences ), and ranks the sentences according to their scores calculated by a set of predefined features , such as term frequency - inverse sentence frequency ( TF - ISF ) ( Radev et al ., 2004 ; Lin and Hovy 2002 ), sentence or term position ( Yih et al ., 2007 ), and number of keywords ( Yih et al ., 2007 ).
+Typical existing summarization methods include centroid - based methods ( e . g ., MEAD ( Radev et al ., 2004 )), graph - ranking based methods ( e . g ., LexPageRank ( Erkan and Radev , 2004 )), non - negative matrix factorization ( NMF ) based methods ( e . g ., ( Lee and Seung , 2001 )), Conditional random field ( CRF ) based summarization ( Shen et al ., 2007 ), and LSA based methods ( Gong and Liu , 2001 ).
+Lhere are two limitations with most of the existing multi - document summarization methods : ( 1 ) Lhey work directly in the sentence space and many methods treat the sentences as independent of each other .
+Although few work tries to analyze the context or sequence information of the sentences , the document side knowledge , i . e .
+the topics embedded in the documents are ignored .
+( 2 ) Another limitation is that the sentence scores calculated from existing methods usually do not have very clear and rigorous probabilistic interpretations .
+Many if not all of the sentence scores are computed using various heuristics as few research efforts have been reported on using generative models for document summarization .
+In this paper , to address the above issues , we propose a new Bayesian sentence - based topic model for multi - document summarization by making use of both the term - document and term - sentence associations .
+Our proposal explicitly models the probability distributions of selecting sentences given topics and provides a principled way for the summarization task .
+An efficient variational Bayesian algorithm is derived for estimating model parameters .
+2 Bayesian Sentence - based Topic Models ( BSTM ) 2 . 1 Model Formulation Lhe entire document set is denoted by V . For each document d e V , we consider its unigram language model , where 9 ^ denotes the model parameter for document d , W ™ denotes the sequence of words \ W % G W }™= 1 , i . e .
+the content of the document .
+W is the vocabulary .
+As topic models , we further assume the unigram model as a mixture of several topic unigram models , where T is the set of topics .
+Here , we assume that given a topic , generating words is independent from the document , i . e .
+Instead of freely choosing topic unigram models , we further assume that topic unigram models are mixtures of some existing base unigram models , i . e .
+where S is the set of base unigram models .
+Here , we use sentence language models as the base models .
+One benefit of this assumption is that each topic is represented by meaningful sentences , instead of directly by keywords .
+Thus we have p ( Wi \ 0d ) = YJ YJ p { Wi \ Si = s ) p { Si = s \ Ti = t ) p { Ti = t \ 9d ).
+Here we use parameter Ust for the probability of choosing base model s given topic t , p ( Si = s \ Ti = t ) = Ugt , where J2S Ust = 1 - We use parameters { 6 4 } for the probability of choosing topic t given document d , where J2t ® dt = L We assume that the parameters of base models , { Bws }, are given , i . e .
+p ( Wi = w \ Si = s ) = Bws , where J2W Bws = 1 - Usually we obtain Bws by empirical distribution words of sentence s . 2 . 2 Parameter Estimation For summarization task , we concern how to describe each topic with the given sentences .
+This can be answered by the parameter of choosing base model s given topic t , Ust - Comparing to parameter Ust , we concern less about the topic distribution of each document , i . e .
+Thus we choose Bayesian framework to estimate Ust by marginalizing @ dt - To do so , we assume a Dirich - let prior for 0 ^.
+~ Dir ( a ), where vector a is a hyperparameter .
+Thus the likelihood is = B ( a )- DjniBueT ] if xne2 As Eq .
+( 1 ) is intractable , LDA ( Blei et al ., 2001 ) applies variational Bayesian , which is to maximize a variational bound of the integrated likelihood .
+Here we write the variational bound .
+Definition 1 The variational bound is where the domain ofV isv = { VEi " xir : Et ^ = 1 }, 4 > vk ; u , d = BVJVUvkVdk /[ BUVT ] vjd , 7dk = E „„ Ymd4 > vklmd .
+We have the following proposition .
+Proposition 1 /( U ; Y ) > supVeV 7 ( u > v ; Y )- Actually the optimum of this variational bound is the same as that obtained variational Bayesian approach .
+Due to the space limit , the proof of the proposition is omitted .
+3 The Iterative Algorithm The LDA algorithm ( Blei et al ., 2001 ) employed the variational Bayesian paradigm , which estimates the optimal variation bound for each U .
+The algorithm requires an internal Expectation - Maximization ( EM ) procedure to find the optimal variational bound .
+The nested EM slows down the optimization procedure .
+To avoid the internal EM loop , we can directly optimize the variational bound to obtain the update rules .
+3 . 1 Algorithm Derivation First , we define the concept of Dirichlet adjustment , which is used in the algorithm for variational update rules involving Dirichlet distribution .
+Then , we define some notations for the update rules .
+Definition 2 We call vector y of size K is the Dirichlet adjustment of vector x of size K with respect to Dirichlet distribution Dk { ol ) if where is digamma function .
+We denote it by y = PD ( x ; a ).
+We denote element - wise product of matrix X and matrix Y by X o Y , element - wise division by Y , obtaining Y via normalizing of each column of X as Y ^- X , and obtaining Y via Dirichlet adjustment Vd (-', ot ) and normalization of each row of X as ro ^-^ z = pD (( x . di .)
+The following is the update rules for LDA : Algorithm 1 Iterative Algorithm Input : Y : term - document matrix B : term - sentence matrix K : the number of latent topics Output : U : sentence - topic matrix V : auxiliary document - topic matrix Randomly initialize U and V , and normalize them repeat Compute / using Eq .
+( 2 ); until / converges .
+3 . 2 Algorithm Procedure The detail procedure is listed as Algorithm 1 .
+From the sentence - topic matrix U , we include the sentence with the highest probability in each topic into the summary .
+4 Relations with Other Models In this section , we discuss the connections and differences of our BSTM model with two related models .
+Recently a new language model , factorization with sentence bases ( FGB ) ( Wang et al ., 2008 ) is proposed for document clustering and summarization by making use of both term - document matrix Y and term - sentence matrix B .
+The FGB model computes two matrices U and V by optimizing £( U , V ) = KL I Y \!\! BUV J - lnPr ( U , V ).
+Here , Kullback - Leibler divergence is used to measure the difference between the distributions of Y and the estimated BUVT .
+Our BSTM is similar to the FGB summarization since they are all based on sentence - based topic model .
+The difference is that the document - topic allocation V is marginalized out in BSTM .
+The marginalization increases the stability of the estimation of the sentence - topic parameters .
+Actually , from the algorithm we can see that the difference lies in the Dirichlet adjustment .
+Experimental results show that our BSTM achieves better summarization results than FGB model .
+Our BSTM model is also related to 3 - factor non - negative matrix factorization ( NMF ) model ( Ding et al ., 2006 ) where the problem is to solve U and V by minimizing Both BSTM and NMF models are used for solving U and V and have similar multiplicative update rules .
+Note that if the matrix B is the identity matrix , Eq .
+( 5 ) leads to the derivation of the NMF algorithm with Frobenius norm in ( Lee and Seung , 2001 ).
+However , our BSTM model is a generative probabilistic model and makes use of Dirichlet adjustment .
+The results obtained in our model have clear and rigorous probabilistic interpretations that the NMF model lacks .
+In addition , by marginalizing out V , our BSTM model leads to better summarization results .
+5 Experimental Results 5 . 1 Data Set To evaluate the summarization results empirically , we use the DUC2002 and DUC2004 data sets , both of which are open benchmark data sets from Document Understanding Conference ( DUC ) for generic automatic summarization evaluation .
+Table 1 gives a brief description of the data sets .
+Table 2 : Overall performance comparison on DUC2002 data using ROUGE evaluation methods .
+Table 3 : Overall performance comparison on DUC2004 data using ROUGE evaluation methods .
+5 . 2 Implemented Systems We implement the following most widely used document summarization methods as the baseline systems to compare with our proposed BSTM method .
+( 1 ) Random : The method selects sentences randomly for each document collection .
+Table 1 : Description of the data sets for multi - document summarization ( 2 ) Centroid : The method applies MEAD algorithm ( Radev et al ., 2004 ) to extract sentences according to the following three parameters : centroid value , positional value , and hrst - sentence overlap .
+( 3 ) LexPageRank : The method first constructs a sentence connectivity graph based on cosine similarity and then selects important sentences based on the concept of eigenvector cen - trality ( Erkan and Radev , 2004 ).
+( 4 ) LSA : The method performs latent semantic analysis on terms by sentences matrix to select sentences having the greatest combined weights across all important topics ( Gong and Liu , 2001 ).
+( 5 ) NMF : The method performs non - negative matrix factorization ( NMF ) on terms by sentences matrix and then ranks the sentences by their weighted scores ( Lee and Seung , 2001 ).
+( 6 ) KM : The method performs K - means algorithm on terms by sentences matrix to cluster the sentences and then chooses the cen - troids for each sentence cluster .
+( 7 ) FGB : The FGB method is proposed in ( Wang et al ., 2008 ).
+5 . 3 Evaluation Measures We use ROUGE toolkit ( version 1 . 5 . 5 ) to measure the summarization performance , which is widely applied by DUC for performance evaluation .
+It measures the quality of a summary by counting the unit overlaps between the candidate summary and a set of reference summaries .
+The full explanation of the evaluation toolkit can be found in ( Lin and E . Hovy , 2003 ).
+In general , the higher the ROUGE scores , the better summarization performance .
+5 . 4 Result Analysis Table 2 and Table 3 show the comparison results between BSTM and other implemented systems .
+From the results , we have the follow observations : ( 1 ) Random has the worst performance .
+The results of LSA , KM , and NMF are similar and they are slightly better than those of Random .
+Note that LSA and NMF provide continuous solutions to the same K - means clustering problem while LSA relaxes the non - negativity of the cluster indicator of K - means and NMF relaxes the orthogonality of the cluster indicator ( Ding and He , 2004 ; Ding et al ., 2005 ).
+Hence all these three summarization methods perform clustering - based summarization : they first generate sentence clusters and then select representative sentences from each sentence cluster .
+( 2 ) The Centroid system outperforms clustering - based summarization methods in most cases .
+This is mainly because the Centroid based algorithm takes into account positional value and first - sentence overlap which are not used in clustering - based summarization .
+( 3 ) LexPageRank outperforms Centroid .
+This is due to the fact that LexPageRank ranks the sentence using eigenvector centrality which implicitly accounts for information subsumption among all sentences ( Erkan and Radev , 2004 ).
+( 4 ) FGB performs better than LexPageRank .
+Note that FGB model makes use of both term - document and term - sentence matrices .
+Our BSTM model outperforms FGB since the document - topic allocation is marginalized out in BSTM and the marginaliza - tion increases the stability of the estimation of the sentence - topic parameters .
+( 5 ) Our BSTM method outperforms all other implemented systems and its performance is close to the results of the best team in the DUC competition .
+Note that the good performance of the best team in DUC benefits from their preprocessing on the data using deep natural language analysis which is not applied in our implemented systems .
+The experimental results provide strong evidence that our BSTM is a viable method for document summarization .
+Acknowledgement : The work is partially supported by NSF grants IIS - 0546280 , DMS - 0844513 and CCF - 0830659 .

@@ -1,0 +1,53 @@
+﻿D10-1124: A Latent Variable Model for Geographic Lexical Variation
+
+L12-1561: An Examination of Cross-Cultural Similarities and Differences from Social Media Data with respect to Language Use
+
+S13-1016: BUT-TYPED: Using domain knowledge for computing typed similarity
+
+N15-2003: Analyzing Newspaper Crime Reports for Identification of Safe Transit Paths
+
+D11-1130: Cross-Cutting Models of Lexical Semantics
+
+W06-1105: Comparison of Similarity Models for the Relation Discovery Task
+
+C14-1123: Unsupervised Word Sense Induction using Distributional Statistics
+
+W14-1108: Gene–disease association extraction by text mining and network analysis
+
+L12-1516: Linguagrid: a network of Linguistic and Semantic Services for the Italian Language.
+
+N09-1030: May All Your Wishes Come True: A Study of Wishes and How to Recognize Them
+
+C12-1054: Comparing Taxonomies for Organising Collections of Documents
+
+W13-2027: IRISA participation to BioNLP-ST13: lazy-learning and information retrieval for information extraction tasks
+
+Y09-2036: Modeling the Relationship among Linguistic Typological Features with Hierarchical Dirichlet Process
+
+W15-1527: Estimating User Location in Social Media with Stacked Denoising Auto-encoders
+
+P12-1078: Historical Analysis of Legal Opinions with a Sparse Mixed-Effects Latent Variable Model
+
+W15-1203: The role of personality, age, and gender in tweeting about mental illness
+
+C10-2063: Local Space-Time Smoothing for Version Controlled Documents
+
+P11-1078: Extracting Social Power Relationships from Natural Language
+
+W12-2106: Re-tweeting from a linguistic perspective
+
+W13-2232: Online Polylingual Topic Models for Fast Document Translation Detection
+
+P14-1109: A Semiparametric Gaussian Copula Regression Model for Predicting Financial Risks from Earnings Calls
+
+L14-1615: Ranking Job Offers for Candidates: learning hidden knowledge from Big Data
+
+W15-1704: Long Nights, Rainy Days, and Misspent Youth: Automatically Extracting and Categorizing Occasions Associated with Consumer Products.
+
+L14-1615: Inverse Document Density: A Smooth Measure for Location-Dependent Term Irregularities
+
+D09-1092: Polylingual Topic Models
+
+D13-1114: Gender Inference of Twitter Users in Non-English Contexts
+
+D14-1057: A Comparison of Selectional Preference Models for Automatic Verb Classification

@@ -1,0 +1,30 @@
+﻿Build started 27/04/2016 14:43:11.
+     1>Project "\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\CLTM\CLTM.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\CLTM.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\Debug\CLTM.exe" /INCREMENTAL /NOLOGO libgsl_d.lib libgslcblas_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\CLTM.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\Debug\CLTM.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\Debug\CLTM.lib" /MACHINE:X86 Debug\CLTM.exe.embed.manifest.res
+         Debug\CLTM.obj
+         Debug\cltm_model.obj
+         Debug\corpus.obj
+         Debug\data.obj
+         Debug\document.obj
+         Debug\estimate.obj
+         Debug\multiset.obj
+         Debug\stdafx.obj
+     1>LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\Debug\CLTM.exe : fatal error LNK1108: cannot write file at 0xE000
+     1>FileTracker : error FTK1006: could not write entry to the file tracking log file: \\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\CLTM\Debug\link.read.1.tlog. Not enough quota is available to process this command.
+         
+         
+         
+     1>Done Building Project "\\nas\home\My Documents\Visual Studio 2010\Projects\CLTM\CLTM\CLTM.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:11.31

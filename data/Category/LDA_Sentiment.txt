@@ -1,0 +1,88 @@
+﻿C04-1200: Determining the Sentiment of Opinions
+
+I13-1114: A Two-Stage Classifier for Sentiment Analysis
+
+W11-0705: Sentiment Analysis of Twitter Data
+
+W14-2605: Aspect-Level Sentiment Analysis in Czech
+
+D13-1171: Open Domain Targeted Sentiment
+
+P10-1042: Sentiment Learning on Product Reviews via Sentiment Ontology Tree
+
+P11-1015: Learning Word Vectors for Sentiment Analysis
+
+S14-2104: Supervised Methods for Aspect-Based Sentiment Analysis
+
+I11-1131: Extracting Resource Terms for Sentiment Analysis
+
+P12-1043: Cross-Domain Co-Extraction of Sentiment and Topic Lexicons
+
+I13-1065: Sentiment Aggregation using ConceptNet Ontology
+
+W13-4102: Topic Modeling with Sentiment Clues and Relaxed Labeling Schema
+
+S13-2089: UoM: Using Explicit Semantic Analysis for Classifying Sentiments
+
+P08-1036: A Joint Model of Text and Aspect Ratings for Sentiment Summarization
+
+D14-1120: Exploiting Social Relations and Sentiment for Stock Prediction
+
+D14-1169: Clustering Aspect-related Phrases by Leveraging Sentiment Distribution Consistency
+
+S14-2145: UWB: Machine Learning Approach to Aspect-Based Sentiment Analysis
+
+W10-2918: A Comparative Study of Bayesian Models for Unsupervised Sentiment Detection
+E14-1009: Multi-Granular Aspect Aggregation in Aspect-Based Sentiment Analysis
+
+P13-2005: Exploiting Topic based Twitter Sentiment for Stock Prediction
+
+W12-4001: Sentiment Analysis Using a Novel Human Computation Game
+
+L14-1395: Author-Specific Sentiment Aggregation for Polarity Prediction of Reviews
+
+S15-2129: SIEL: Aspect Based Sentiment Analysis in Reviews
+
+P11-2100: Semi-supervised latent variable models for sentence-level sentiment analysis
+
+W15-1516: A Vector Space Approach for Aspect Based Sentiment Analysis
+
+D09-1017: Review Sentiment Scoring via a Parse-and-Paraphrase Paradigm
+
+I11-1009: Automatic Topic Model Adaptation for Sentiment Analysis in Structured Domains
+
+D10-1005: Holistic Sentiment Analysis Across Languages: Multilingual Supervised Latent Dirichlet Allocation
+
+P14-2071: Improving Twitter Sentiment Analysis with Topic-Based Mixture Modeling and Semi-Supervised Training
+
+W13-4204: The New Eye of Government: Citizen Sentiment Analysis in Social Media
+
+W11-1712: Feature Selection for Sentiment Analysis Based on Content and Syntax Models
+
+R11-1020: An Exploration into the Use of Contextual Document Clustering for Cluster Sentiment Analysis
+
+S13-2069: [LVIC-LIMSI]: Using Syntactic Features and Multi-polarity Words for Sentiment Analysis in Twitter
+
+S14-2041: ECNU: A Combination Method and Multiple Features for Aspect Extraction and Sentiment Polarity Classification
+
+S14-2124: ÚFAL: Using Hand-crafted Rules in Aspect Based Sentiment Analysis on Parsed Data
+
+I11-1037: Enhancing the HL-SOT Approach to Sentiment Analysis via a Localized Feature Selection Framework
+
+P13-1160: A Bayesian Model for Joint Unsupervised Induction of Sentiment, Aspect and Discourse Representations
+
+R13-1016: Unsupervised Improving of Sentiment Analysis Using Global Target Context
+
+S14-2020: Blinov: Distributed Representations of Words for Aspect-Based Sentiment Analysis at SemEval 2014
+
+S15-2128: Lsislif: CRF and Logistic Regression for Opinion Target Extraction and Sentiment Polarity Analysis
+
+S15-2087: IIIT-H at SemEval 2015: Twitter Sentiment Analysis – The Good, the Bad and the Neutral!
+
+S15-2095: Lsislif: Feature Extraction and Label Weighting for Sentiment Analysis in Twitter
+
+D14-1052: Explaining the Stars: Weighted Multiple-Instance Learning for Aspect-Based Sentiment Analysis
+
+N13-1041: Mining User Relations from Online Discussions using Sentiment Analysis and Probabilistic Matrix Factorization
+
+S14-2063: JU\_CSE: A Conditional Random Field (CRF) Based Approach to Aspect Based Sentiment Analysis

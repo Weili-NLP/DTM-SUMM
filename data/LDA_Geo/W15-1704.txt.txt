@@ -1,0 +1,228 @@
+Long Nights , Rainy Days , and Misspent Youth : Automatically Extracting and Categorizing Occasions Associated with Consumer Products .
+One way in which marketers gain insights about consumers is by identifying the occasions in which consumers use their products and which are invoked by their products .
+Identifying occasions helps in consumer segmentation , answering why consumers purchase a product , and where and when they use it .
+Additionally , the types of occasions a consumer participates in and the social settings surrounding those occasions provide insights into the consumer ' s personality and sociocul - tural self .
+Insights such as these are required for understanding consumer behavior , which marketers need to better design and sell their products .
+In this paper , we describe a methodology for extracting and categorizing occasions from product reviews , product descriptions , and forum posts .
+We examine using a maximum entropy markov model ( MEMM ) and a linear chain conditional random field ( CRF ) for extraction and find the CRF results in a 72 . 4 % Fl - measure .
+Extracted occasions are categorized as one of six high - level types ( Celebratory , Special , Seasonal , Temporal , Weather - Related , and Other ) using a support vector machine with an 88 . 5 % macro - averaged Fl - measure .
+1 Introduction Social media provides an outlet for consumers to discuss , praise , chastise , and recommend products and services .
+These consumer generated reviews and commentaries provide marketers insight into the who , what , when , where , why , and how ( i . e .
+the six W ' s ) surrounding the procurement and usage of their products .
+One way in which marketers answer the six W ' s is by identifying the occasions , particular times or events , in which their products are used or with which consumers associate their products .
+These occasions may be routine , e . g .
+" work " or " at the office ", seasonal / weather related , e . g .
+" rainy day " or " winter ", special , e . g .
+" birthday " or " Christmas ", or time related , e . g .
+" on the run " or " early morning ."
+More than just answering the six W ' s , occasions also provide a marketer insight into the personality , social status , social circle , and behavior of consumers .
+Marketers traditionally rely upon surveys and ethnographic studies in order to gain insights about consumers .
+The results of these surveys and studies are : ( 1 ) consumer segments ; ( 2 ) when and where the respondents are likely to purchase or use a product ; ( 3 ) whether they are likely to use the product alone or with others ; ( 4 ) whether or not the respondents like the product ; and ( 5 ) are the respondents likely to purchase the product again .
+These surveys and studies are costly and limited to a much smaller sample size than is obtainable via online reviews and social media .
+However , current computational approaches to gaining consumer insights typically are limited to the volume and trend of positive and negative comments , reviews , tweets , etc .
+( Pang et al ., 2002 ; Dini and Mazzini , 2002 ; Smith et al ., 2012 ; Socher et al ., 2013 ).
+Research from the fields of consumer and social psychology , dialogue processing , and affective must be incorporated into computational systems in order for them to replace surveys as a marketer ' s source of consumer insights .
+Drawing on these fields of research facilitates an understanding of the attitudes , behaviors , and personal and sociocultural qualities of consumers .
+Critical to the success of such a computational system is the automated extraction of the occasions in which consumers use a product or with which they associate a product .
+These occasions and their implicatures provide answers to the six W ' s and are a basis for understanding a consumer ' s personal and sociocultural self .
+In this paper , we present a methodology for automatically extracting and categorizing occasions in product reviews , product descriptions and forum posts .
+The extraction of occasions is cast as a sequence labeling problem using the standard BIO encoding .
+Extracted occasions are categorized as one of six high - level types , Celebratory , Special , Seasonal , Temporal , Weather - Related , and Other , based on common occasions marketers seek to capture in surveys .
+2 Related Work The most related area of research to the extraction of occasions is event extraction .
+Event extraction deals not only with the extraction of events , but also with the extraction of the entities participating in the events , and other attributes of the event , such as the time ( Moschitti et al ., 2013 ), location ( Speriosu et al ., 2010 ), and modality ( Bracewell et al ., 2014 ).
+Despite the advances in the extraction of events , the definition of an " event " is ill - defined and changes based on the problem being solved .
+The Automated Content Extraction ( ACE ) program defines events using a limited set of types ( ACE , 2005 ).
+TimeML defines events as " situations that happen or occur " and mainly focuses on the duration properties of the event ( Pustejovsky et al ., 2003 ).
+Instead of precisely defining what an event is , Monahan and Brunson ( 2014 ) identify the qualities representative of events .
+Research in real - time event detection has benefited from the wide spread acceptance and adoption of social media .
+Sites like Twitter and Facebook act like social sensors facilitating the real time detection of disasters ( Sakaki et al ., 2010 ; Vieweg et al ., 2010 ) and local events ( Boettcher and Lee , 2012 ; Lee and Sumiya , 2010 ).
+Relying on the real - time nature of Twitter and the volume of tweets around unusual or significant events , Sakaki et al .
+( 2010 ) construct a real - time earthquake detection system using twitter users as sensors .
+Lee and Sumiya ( 2010 ) use Twitter to determine unusual local events happening in a given geographic area based on the regularity of tweets against the normal behavior of twitter users in the area .
+The dialogue that takes place over social media makes it possible to find and extract life and social events for such purposes as detecting online bullies ( Dinakar et al ., 2011 ) and suicide prevention ( Jashinsky et al ., 2014 ).
+( 2014 ) target specific replies on Twitter containing manifestations of speech acts , namely congratulations / condolences , to extract major life events , e . g .
+marriage , using a distant - supervised approach .
+In addition to the detection of events , work has been done on identifying the social implicatures of dialogue which is in response to a set of events ( e . g .
+Wikipedia page edit ) or which may lead to a series events ( e . g change in leadership ) ( Bracewell et al ., 2011 ; Bracewell et al ., 2012 ; Tomlinson et al ., 2012 ).
+Broader related research on mining consumer insights is found in the fields of consumer psychology and affective computing .
+Consumer psychology studies how thoughts , feelings , and perceptions influence the way individuals buy , use , and relate to products , services , and brands .
+Drawing from other areas in psychology , e . g .
+social psychology , consumer psychologists formalize the cognitive system of consumers using a categorical representation of products , services , brands and other marketing entities ( Loken et al ., 2008 ).
+Supported by Rosch ' s ( 1973 ) work on prototype theory , Loken and Ward ( 1990 ) find a link between the prototypicality of a product and consumers ' affect toward it .
+A critical component to understanding consumers ' affect toward a product is identifying the brands , products , and attributes ( or aspects ) of the product consumers are mentioning .
+Wiegand and Klakow ( 2014 ) examine separating types from brands , e . g .
+" soda " vs " coke ", using a ranking - based approach which alleviates the need for labeled data .
+Putthividhya and Hu ( 2011 ) use a named entity recognition system to extract product attributes from listing titles on eBay .
+They focus on extracting brand , style , size , and color within the clothing and shoes categories .
+( 2007 ) describe a WordNet - based approach to constructing hierarchical facets relating to aspects associated with a domain or product .
+( 2011 ) present a domain - assisted approach to constructing aspect hierarchies .
+Aspect - based sentiment analysis ( Pontiki et al ., 2014 ) merges affect and information extraction seeking to determine the sentiment toward aspects of products , e . g .
+the consumer sentiment toward the screen of a TV or the food at a restaurant .
+Approaches to aspect term identification range from standard BIO encoding ( Chernyshevich , 2014 ; Toh and Wang , 2014 ) to rule - based approaches ( Poria et al ., 2014 ).
+Techniques for aspect polarity detection include machine learning based techniques that integrate multiple sentiment lexicons ( Wagner et al ., 2014 ) to grammar based approaches ( Brun et al ., 2014 ).
+More general than aspect - based sentiment analysis is sentie computing ( Cambria and Hussain , 2012 ).
+Sentie computing synthesizes common - sense computing , linguistics , and psychology to infer both affective and semantic information about concepts .
+( 2014 ) show how SenticNet , a semantic and affective resource , can detect topics and determine polarity in patient opinions .
+Another area of research relevant to consumer insights is around the identification of needs and wants on social media .
+Kanayama and Nasukawa ( 2008 ) examine the needs and wants of consumers using syntactic patterns to analyze the demand for products .
+( 2010 ) examine the identification of wishes in reviews and surveys in which consumers make suggestions for improvements and show their intentions to purchase / use a product .
+3 Modeling Occasions for Consumer Insights Occasions are particular times or events and range from the everyday , such as waking up and going to bed , to the special , such as birthdays and weddings .
+While every occasion is of importance , those surrounding products are of the most use to marketers for gaining insights into consumer behavior .
+Thus , in this paper we focus only on occasions which are related to a product .
+More specifically we restrict the definition of an occasion to : Times or happenings in which a product is used or with which a product is associated .
+Occasions matching this definition are in bold font in the following examples : 1 .
+" They are GREAT to take along to a party if you ' re serving crackers and cheese ."
+" I bought these for my vacation and they did not disappoint ."
+" Boy , do these take me back to those misspent days of my foolish youth ."
+In the first example the occasion is a party relating to where the reviewer used the product .
+From this example we can infer that the occasion of use is social , i . e .
+involved more than just the reviewer , and most probably is informal .
+Furthermore , we learn that the reviewer believes the product is well suited for party occasions .
+Given further context about the kind of party , e . g .
+kids or work , would lead to further insights about the individual , such as if they have children , their age , their occupation , and their marital status .
+In the second review the occasion (" vacation ") is the reason for the reviewer to purchase the product and the answer to when the reviewer used it .
+Moreover , from the review we can infer that the use of the product was a positive experience for the reviewer .
+The third review is an example of how a product can be associated with an occasion , which in this case is a memory of the reviewer ' s youth .
+Marketers use these type of occasions to connect with consumers at a subconscious and emotional level .
+While occasions are closely related to events , not all fit nicely within the ACE and TimeML definitions .
+For example , take the following : 1 .
+" These boots really kept me warm during the winter ."
+" Every time I smell a freshly baked apple pie it brings me back to my childhood . "
+In the first example the product is a pair of boots and the occasion of use is the winter .
+Within an event framework winter would not be identified as an event , but as a temporal attribute possibly of a " keep warm ".
+In the second example the occasion is " brings me back to my childhood " and is associated with the product (" apple pie ") by the reviewer .
+The event in the sentence is a " baking " event with the apple pie being the item baked .
+The occasion is tangential to the event and most likely would not be associated with it by an event extraction system .
+However , this type of occasion provides evidence of a strong connection between the product and a specific time or event that is nostalgic for the consumer and is invaluable for marketers when crafting their marketing strategy .
+Often occasions are associated with special events , such as ceremonies and celebrations .
+However , as with event types , there are a number of different types of occasions .
+We define six high - level types , listed in Figure 1 , which are based on common occasions marketers use to segment consumers .
+Celebratory occasions , which include parties and festivals , are social occasions and inform to the group with which the consumer belongs .
+An example of a celebratory occasion is : " I wore it a couple weeks ago to a party and felt festive yet as comfy as if I was wearing loungewear ."
+Some celebrations are due to special occasions .
+Special occasions are those which have significant meaning to the consumer , such as holidays and religious observances .
+The following review excerpt contains mentions of two special occasions : " I recommend these for your engagement party or rehearsal dinner ."
+Temporal and seasonal occasions relate to the time in which a product is used or associated .
+An example of a seasonal occasion is : " A quintessential style to take you between seasons ."
+The following excerpt from a product description contains two suggested temporal occasions of use : " Just the right size for your day - to - day life , but elegant enough for evening ."
+Weather - related occasions relate to the weather , e . g .
+rain and snow , or temperature , e . g .
+hot and 98 degress .
+Two examples of weather - related occasions are seen in : " The tea is great hot for chilly nights and iced for hot days ."
+Finally , we define an other type for occasions that do not neatly fit in one of the previous five categories .
+An example of an occasion that is marked as other is : " Taking a look at the latest summer fashion makes me want to lie on the beach ."
+While there are a multitude of additional occasions types that are definable , we limit the categories to the six presented above in this paper .
+4 Data Collection and Annotation We collect 26 , 208 sentences from 1 , 000 product reviews , 500 product descriptions , and 800 forum posts discussing fashion and food related products for annotation .
+An iterative annotation process is used wherein during each iteration automated machine annotation is performed followed by manual correction .
+During the initial iteration automated machine annotations are produced using a gazetteer and successive iterations use a machine learning model .
+Manual correction of the machine annotations involves : ( 1 ) removing incorrect occasions ; ( 2 ) adding missed occasions ; and ( 3 ) fixing boundaries of partially correct occasions .
+Due to project constraints all manual correction is performed by one annotator .
+In the future , we hope to employ multiple annotators .
+Figure 1 : The six high - level occasion types used to categorize occasion mentions .
+The initial iteration of the annotation process is performed on 7 , 000 randomly selected sentences .
+The gazetteer used during the initial iteration is semi - automatically constructed using Word - Net ( Miller , 1995 ).
+The full hyponym tree and all derivationally related forms for social event , time period , and the first noun sense of activity are extracted to construct the gazetteer .
+Examples of occasions identified using the gazetteer are as follows : 1 .
+" Darling cocktail party or date night dress ."
+" We only stayed at the party an hour because my shoes were killing my feet ."
+In the examples listed above , occasions in bold font are correctly identified by the gazetteer and left as - is , underlined occasions are incorrectly identified by the gazetteer and removed , and occasions in italic font are not in the gazetteer and added during manual correction .
+After manual correction ( involving the previously three mentioned steps ) of the initial 7 , 000 sentences , 4 , 500 are randomly selected and held out as test data , and 500 are held out as a development set for occasion extraction .
+The remaining 2 , 000 sentences are used as training data for the machine learning model in the second iteration .
+The second and successive iterations work on batches of 500 sentences .
+At each iteration a machine learning model is trained and then used to extract occasions in the new batch of sentences .
+During each iteration we switch the model we train between the two described in Section 5 .
+We alternate models to ensure we do not bias toward one model and because each model is likely to find something the other did not .
+The machine identified annotations are manually corrected and added to the set of training data for the next iteration .
+This process is repeated until all sentences are annotated .
+2 , 393 occasions are annotated across the 26 , 208 sentences making up the corpus .
+This an average of 1 occasion every 11 sentences .
+There is approximately 1 occasion per product review and forum post and 1 occasion every 3 product descriptions .
+The next step in the annotation process is to assign a type to each of the 2 , 393 annotated occasions .
+We use WordNet to assign an initial type and manually correct the assigned labels .
+We construct a mapping between WordNet senses and occasion types by starting with a set of twelve seeds , listed in Figure 2 .
+The full hyponym tree and all derivationally related forms of each seed sense are extracted and mapped to the seed ' s associated occasion type .
+Figure 2 : Seed senses for mapping from WordNet senses to occasions types .
+Where the sense is described in lemma # POS # sense number form .
+WordNet lemmas found in a given occasion annotation are examined in right - to - left order .
+All senses for a lemma are considered in order of sense number .
+Assignment is performed greedily with the type of the first sense found in the mapping being assigned to the occasion .
+The Other type is assigned if no mapping is found .
+After automatic type assignment is complete the types are manually corrected .
+Most types are easily determined by an annotator .
+However , the celebratory and special types do have an overlap , e . g .
+birthday party .
+Annotators are told to assign the category of special instead of celebratory when the celebration is associated with a life event ( e . g .
+birthday and engagement parties ).
+The breakdown of the number occasions of each type is shown in Table 1 .
+Table 1 : The number of occasions annotated for the six high - level types .
+5 Computational Methodology and Experimental Results We divide the extraction and categorization of occasions into two different tasks .
+We found in preliminary experiments that this division produces better results than jointly performing the two tasks .
+The rest of this section details the models and results for each task .
+5 . 1 Automatically Extracting Occasions We model the extraction of occasions using the standard BIO encoding .
+Words in a sentence are labeled as B - Occasion , I - Occasion , or Other depending on if the word begins an occasion phrase , is within an occasion phrase , or is outside of an occasion phrase respectively .
+We experiment using a maximum entropy markov model ( MEMM ) ( McCallum et al ., 2000 ) and a linear chain conditional random field ( CRF ) ( Lafferty et al ., 2001 ) to perform extraction .
+We use an in - house implementation of MEMMs , which uses the LibLinear library ( Fan et al ., 2008 ), and CRFsuite ( Okazaki , 2007 ) for the CRF implementation .
+Parameters are tuned using a grid search to maximize the Fl - measure over the 500 sentence development set .
+The optimal parameters for the MEMM are C = 3 and the optimal parameters for the CRF are CI = 0 and C2 = 2 .
+The feature templates used for the extraction of occasions are listed in Figure 3 .
+The features consist of surface , syntactic , and semantic information about the word and its context .
+Syntactic information is in the form of part - of - speech information and semantic information is in the form of WordNet super sense , i . e .
+lexicographer filenames ( note that all possible super senses are for a word , i . e .
+no sense disambiguation is performed ).
+These features , with the exception of the WordNet - based feature , are commonly used in other sequence labeling tasks , such as shallow parsing and named entity recognition .
+We eliminate all features that occur only once in our training set .
+5 . 1 . 1 Results Performance is measured using the CoNLL precision , recall , and Fl - measure and the percentage instance error in which an occasion is correct if and only if it exactly matches a gold standard annota - Figure 3 : Feature templates used for extracting occasions .
+wi , ■ ■ ■, wn are the words in the sentence and Wi the current word , pi , ■ ■ ■ , pn is the part - of - speech sequence for the sentence and pi is the part - of - speech for the current word Wi .
+sense ( wi ) returns all possible senses for the current word , Wi , and ssij is the super sense associated with sense j . U is the tag assigned to the i ' th word .
+tion .
+Results for the MEMM and CRF are listed in Table2 .
+As is in seen in the table , the CRF model outperforms the MEMM with an increase in precision of 4 . 5 %, recall of 20 . 6 %, and Fl - measure of 16 . 5 %.
+Additionally , the CRF has an approximately 57 % decrease in instance error rate .
+Table 2 : CoNLL Precision , Recall , Fl - measure , and percentage instance Error results for extracting occasions .
+Table 3 lists the precision , recall , and Fl - measure by length of the occasion in words .
+The performance of the MEMM degrades as the length of the occasion increases whereas the performance of the CRF is consistent across the varying lengths .
+One explanation of why the CRF performs better than the MEMM is the label - bias problem .
+Label - bias is a known weakness of MEMMs , which CRFs address , in which contextual information is lost around low - entropy transitions due to the use of a per - state ( vs single ) exponential model ( Lafferty et al ., 2001 ).
+Examples where the CRF and MEMM extract an occasion correctly are : 1 .
+" Just what you need for a hot summer day !"
+" We ( my son and I ) purchased this gift set for my wife on Valentines day ."
+" It ' s the perfect size to take me from a day at work to a night out for drinks with friends ."
+In the first example , the occasion (" hot summer day ") is noun phrase representing the reviewer ' s belief of a good time to use the product .
+In the second example the occasion is a holiday (" Valentines day ").
+The final example contains two occasion mentions that represent a time range , in the form of from timei to Mme2 .
+5 . 2 Automatically Categorizing Occasions Once an occasion is extracted it is categorized as one of the previously defined six types .
+We examine the effectiveness of categorizing occasions given only the occasion and no context .
+This task is an example of a short - text classification problem ( Sriram et al ., 2010 ).
+To solve this task we use a multi - class support vector machine as implemented in the Lib - Linear library ( Fan et al ., 2008 ).
+We use the default values for the C and e parameters .
+Three features are used for determining the type of an occasion .
+The first is the standard bag of words with words normalized to lowercase .
+The second feature is the WordNet super senses of all possible senses found in the occasion .
+The super senses for adjectives and adverbs in WordNet are not as well defined as they are for nouns and verbs .
+Because of this , we use the super sense for the associated noun sense using the derivationally related form relation for adjectives and the pertainym ( adverb to adjective ) and derivationally related form ( adjective to noun ) relations for adverbs .
+The final feature is the SUMO concepts ( Benzmüller and Pease , 2012 ) associated with all WordNet senses in the occasion .
+5 . 2 . 1 Results Table 4 lists the 10 - fold cross - validation results for determining the type of a given occasion .
+As is seen in the table , Fl - measures range from 71 . 9 % for weather - related to 96 . 7 % for seasonal .
+Table 4 : 10 - fold cross - validation Precision , Recall , and Fl - measure for categorizing occasions as Celebratory , Special , Seasonal , Temporal , Weather - Releated , or Other .
+Examples of errors in type assignment are shown in Figure 4 .
+The errors in the first two examples happen due to " spring " and " time " being highly associated with seasonal and temporal occasions respectively .
+In the third example , the system assigns the type other whereas the true type is special .
+While the act of " shooting photos " is itself not special the type of photos (" engagement ") in the example does make it special .
+In the fourth example the occasion " upcoming year " is assigned special by the system most likely due to its similarity to the variations of the " new year " special occasions in the corpus .
+The final error is a common example of confusion dealing with celebrations taking place as part of a special occasion .
+The gold standard annotations label these as special occasions whereas the system mostly identifies them as celebratory .
+Table 3 : CoNLL Precision , Recall andFl - measure by length of occasion in words .
+6 Conclusion In this paper we introduce a methodology for extracting and categorizing occasions in which a product is used or with which a product is associated .
+We focus primarily on product descriptions , product reviews , and forum posts which are comments or reviews about a product .
+Occasions are categorized as one of six types : Celebratory , Special , Seasonal , Temporal , Weather - Related , and Other .
+Extraction and categorization are treated as separate tasks with extraction casted as a BIO encoded sequence labeling problem and categorization as a short text classification problem .
+We examine the use of a MEMM and CRF for extracting occasions and find that the CRF model outperforms the MEMM .
+Categorization is cast as six - class classification problem with a support vector machine used to predict the best type .
+Categorization results in a macro - averaged Fl - measure of 88 . 5 %.
+In the future , we plan to identify the relation between products / attributes and occasions and between two occasions .
+We envision product - occasion relations to include usage and procurement and relations between two occasions to include standard event relations , such as causation .
+We also plan to increase the amount of training data including multiple new product domains .
+With the addition of new training data we will also expand upon the current set of six occasions types .
+In particular , we will examine the use of topic models , such as Latent Dirichlet Allocation , to split the " Other " category into multiple topically relevant ones .
+We posit that while there exists a set of core occasion categories the vast majority are domain - dependent .
+Figure 4 : Examples of errors in the assignment of types to occasions .
